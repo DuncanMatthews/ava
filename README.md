@@ -1,6 +1,6 @@
-<a href="https://usenotesgpt.com/">
-  <img alt="NotesGPT – AI-powered voice note taking in seconds." src="/public/images/og-image.png">
-  <h1 align="center">notesGPT</h1>
+<a href="https://useAVA.com/">
+  <img alt="AVA – AI-powered voice note taking in seconds." src="/public/images/og-image.png">
+  <h1 align="center">AVA</h1>
 </a>
 
 <p align="center">

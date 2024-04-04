@@ -5,11 +5,11 @@ import Footer from '@/components/ui/Footer';
 import { Toaster } from 'react-hot-toast';
 import { Analytics } from '@vercel/analytics/react';
 
-let title = 'notesGPT - Take notes with your voice';
-let description = 'Generate action items from your notes in seconds';
-let url = 'https://usenotesgpt.com';
-let ogimage = 'https://usenotesgpt.com/images/og-image.png';
-let sitename = 'usenotesgpt.com';
+let title = 'AVA - Artficial Virtual Assistant';
+let description = 'AVA is an AI-powered virtual assistant that helps you write better notes.';
+let url = 'https://ava.io/';
+let ogimage = 'https://ava.io/ogimage.png';
+let sitename = 'ava.io';
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),

@@ -10,14 +10,14 @@ export default async function Header() {
         {/* logo */}
         <Link className="flex w-fit items-center gap-[2px]" href="/dashboard">
           <img
-            src="/logo.svg"
-            width={50}
-            height={50}
+            src="/images/ava-logo.png"
+            width={100}
+            height={100}
             alt="logo"
-            className="h-5 w-5 md:h-8 md:w-8"
+            className="h-10 w-10 md:h-20 md:w-20"
           />
           <h1 className="text-xl font-medium text-[#25292F] md:text-3xl">
-            NotesGPT
+            AVA
           </h1>
         </Link>
         {/* buttons */}

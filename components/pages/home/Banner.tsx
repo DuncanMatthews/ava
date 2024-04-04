@@ -10,15 +10,16 @@ const Banner = () => {
           rel="noreferrer"
           className="mb-5 cursor-pointer rounded-2xl border border-black px-4 py-1 text-sm text-slate-600 transition duration-300 ease-in-out hover:text-slate-700 sm:text-base"
         >
-          Powered by <span className="font-bold">Together.ai </span>and{' '}
-          <span className="font-bold">Convex</span>
+          <span className="font-bold">A</span>rtificial{' '}
+          <span className="font-bold">V</span>irtual{' '}
+          <span className="font-bold">A</span>sistant{' '}
         </a>
         <h1 className="inline-block text-center text-4xl font-medium tracking-tighter text-dark lg:text-7xl">
-          AI-Powered Voice <br className="hidden lg:inline-block" />
-          Note Taking
+          Your AI-Powered <br className="hidden lg:inline-block" />
+         Virtual Assistant
         </h1>
         <p className="mt-8 text-center text-xl font-light tracking-tight lg:text-3xl">
-          NotesGPT seamlessly converts your voice notes into{' '}
+          AVA seamlessly converts your voice notes into{' '}
           <span className="font-bold">
             organized <br className="hidden lg:inline-block" />
             summaries

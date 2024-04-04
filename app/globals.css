@@ -22,10 +22,10 @@
 
 .primary-gradient {
   background: linear-gradient(
-    267deg,
-    #4402d2 -9.43%,
+    280deg,
+    #3d3aca -9.43%,
     #040218 -9.42%,
-    rgba(63, 17, 100, 0.94) 4.63%,
+    rgba(65, 144, 230, 0.94) 4.63%,
     rgba(14, 14, 18, 0.82) 127.55%
   );
 }

@@ -42,7 +42,7 @@ export default function Footer() {
           </svg>
         </Link>
         <Link
-          href="https://github.com/nutlope/notesgpt"
+          href="https://github.com/nutlope/AVA"
           className="group"
           aria-label="GitHub"
         >
