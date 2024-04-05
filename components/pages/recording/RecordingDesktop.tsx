@@ -62,13 +62,13 @@ export default function RecordingDesktop({
               className="flex h-[20px] w-[36px] cursor-pointer items-center rounded-full bg-dark px-[1px]"
             >
               <div
-                className={`h-[18px] w-4 rounded-[50%] bg-light ${
-                  originalIsOpen ? 'translate-x-0' : 'translate-x-[18px]'
+                className={`h-4 w-4 rounded-[50%] bg-light ${
+                  originalIsOpen ? 'translate-x-1' : 'translate-x-[18px]'
                 } transition-all duration-300`}
               />
             </div>
             <button
-              className={`text-xl leading-[114.3%] tracking-[-0.6px] text-dark lg:text-2xl ${
+              className={`text-xl leading-[114.3%] tracking-[0.6px] text-dark lg:text-2xl ${
                 !originalIsOpen ? 'opacity-100' : 'opacity-40'
               } transition-all duration-300`}
             >

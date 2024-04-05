@@ -43,6 +43,8 @@ export const chat = internalAction({
 
     const transcript = replicateOutput.transcription || 'error';
 
+    console.log('transcript', transcript);
+
     await ctx.runMutation(internal.whisper.saveTranscript, {
       id: args.id,
       transcript,

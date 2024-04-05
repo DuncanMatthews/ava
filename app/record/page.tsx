@@ -21,6 +21,7 @@ const RecordVoicePage = () => {
   const { user } = useUser();
 
   const generateUploadUrl = useMutation(api.notes.generateUploadUrl);
+  console.log('generateUploadUrl', generateUploadUrl);
   const createNote = useMutation(api.notes.createNote);
 
   const router = useRouter();
