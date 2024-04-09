@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@clerk/clerk-react':
+    specifier: ^4.30.10
+    version: 4.30.10(react@18.2.0)
   '@clerk/nextjs':
     specifier: ^4.29.11
     version: 4.29.11(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
@@ -34,7 +37,7 @@ dependencies:
     version: 2.1.0
   convex:
     specifier: ^1.9
-    version: 1.11.0(react-dom@18.2.0)(react@18.2.0)
+    version: 1.11.0(@clerk/clerk-react@4.30.10)(react-dom@18.2.0)(react@18.2.0)
   convex-helpers:
     specifier: ^0.1.15
     version: 0.1.27(convex@1.11.0)(react@18.2.0)(zod@3.22.4)
@@ -147,6 +150,18 @@ packages:
       - react
     dev: false
 
+  /@clerk/clerk-react@4.30.10(react@18.2.0):
+    resolution: {integrity: sha512-c2X0grf7Vo6LrycvYbVyIyU7Gtyb47mf0/fnQdmF5zL8PIF1Ih5Yn9ZkbNeVjCLQrVRLeSRBgrrEIzlIenbuaQ==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      '@clerk/shared': 1.4.1(react@18.2.0)
+      '@clerk/types': 3.63.1
+      react: 18.2.0
+      tslib: 2.4.1
+    dev: false
+
   /@clerk/clerk-react@4.30.9(react@18.2.0):
     resolution: {integrity: sha512-UWY+XmpbKjkABgmyfy2FUiTQQiN8QSdzyswPoTO9QyosXMZZp+vo/UhVor5V2kIeBoPibyW01oG/Nor2l0a7sA==}
     engines: {node: '>=14'}
@@ -212,6 +227,13 @@ packages:
 
   /@clerk/types@3.63.0:
     resolution: {integrity: sha512-+32fWK+lUG2u0hVaoQ3aZ+j2T/LhF3yNNylBrkD1Kca/goLb+NB/nmw6Svs0Q810FK/uYgqWlXvABPhgILeQFA==}
+    engines: {node: '>=14'}
+    dependencies:
+      csstype: 3.1.1
+    dev: false
+
+  /@clerk/types@3.63.1:
+    resolution: {integrity: sha512-PeZrRzWApJl1BYsT/wQPtEzhDmwfqeMKWuSRcHe3Kh0Itc5Gp7w9HrrKkyMnRuzebVj4z5gX4rwJOmTD/P1DhQ==}
     engines: {node: '>=14'}
     dependencies:
       csstype: 3.1.1
@@ -1833,12 +1855,12 @@ packages:
       zod:
         optional: true
     dependencies:
-      convex: 1.11.0(react-dom@18.2.0)(react@18.2.0)
+      convex: 1.11.0(@clerk/clerk-react@4.30.10)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       zod: 3.22.4
     dev: false
 
-  /convex@1.11.0(react-dom@18.2.0)(react@18.2.0):
+  /convex@1.11.0(@clerk/clerk-react@4.30.10)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-YVQ064Nx/cBWN01AJBL6TuJRzZfpxT6GQA/ne23pevmXwDohy5Lup9dGGnUkKLwFMwjqD/Wv4oXcotyFirBbJg==}
     engines: {node: '>=16.15.1', npm: '>=7.0.0'}
     hasBin: true
@@ -1857,6 +1879,7 @@ packages:
       react-dom:
         optional: true
     dependencies:
+      '@clerk/clerk-react': 4.30.10(react@18.2.0)
       esbuild: 0.17.19
       jwt-decode: 3.1.2
       node-fetch: 2.7.0

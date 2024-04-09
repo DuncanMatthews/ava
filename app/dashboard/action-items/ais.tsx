@@ -32,6 +32,7 @@ export default function ActionItemsPage({
         </h3>
       </div>
       <div className="mx-auto mt-[27px] w-full max-w-[900px] px-5 md:mt-[45px]">
+        
         {actionItems?.map((item, idx) => (
           <div
             className="border-[#00000033] py-1 md:border-t-[1px] md:py-2"
@@ -65,6 +66,8 @@ export default function ActionItemsPage({
             </div>
           </div>
         ))}
+
+        {/* start notice that no action items recorded */}
         {actionItems?.length === 0 && (
           <div className="flex flex-col items-center justify-center">
             <div className="flex h-[50vh] w-full flex-col items-center justify-center gap-7">
@@ -81,6 +84,7 @@ export default function ActionItemsPage({
             </div>
           </div>
         )}
+        {/* end notice that no action items recorded */}
       </div>
     </div>
   );

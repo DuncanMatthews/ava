@@ -82,6 +82,7 @@ export default function RecordingDesktop({
           </h1>
         </div>
       </div>
+
       <div className="grid h-full w-full grid-cols-2 px-[30px] lg:px-[45px]">
         <div className="relative min-h-[70vh] w-full border-r px-5 py-3 text-justify text-xl font-[300] leading-[114.3%] tracking-[-0.6px] lg:text-2xl">
           {transcription ? (
@@ -97,6 +98,8 @@ export default function RecordingDesktop({
             </ul>
           )}
         </div>
+
+        {/* start action items div */}
         <div className="relative mx-auto mt-[27px] w-full max-w-[900px] px-5 md:mt-[45px]">
           {generatingActionItems
             ? [0, 1, 3].map((item: any, idx: number) => (
@@ -154,6 +157,8 @@ export default function RecordingDesktop({
                   </div>
                 </div>
               ))}
+
+          {/* Start view all action items button */}
           <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center justify-center">
             <Link
               className="rounded-[7px] bg-dark px-5 py-[15px] text-[17px] leading-[79%] tracking-[-0.75px] text-light md:text-xl lg:px-[37px]"
@@ -163,7 +168,9 @@ export default function RecordingDesktop({
               View All Action Items
             </Link>
           </div>
+          {/* End view all action items button */}
         </div>
+        {/* end action items div */}
       </div>
     </div>
   );
