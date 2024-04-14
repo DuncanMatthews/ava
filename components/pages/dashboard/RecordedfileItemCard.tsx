@@ -17,9 +17,9 @@ const RecordedfileItemCard = ({
 
   return (
     <Link
-      href={`/recording/${_id}`}
-      className="mx-2 flex items-center justify-between border-[0.5px] border-[#00000050] bg-white px-[23px] py-[17px] transition hover:bg-gray-100 md:w-full"
-    >
+      href={`/dashboard/recording/${_id}`}
+      className="mx-2 space-x-4 flex items-center rounded-lg mb-5 justify-between p-3 backdrop-blur-sm bg-purple-200/30 border-4 border-purple-200/20 backdrop-filter"
+      >
       <div className="flex w-fit items-center gap-[23px]">
         <div className="hidden items-center justify-center rounded-[50%] bg-dark p-2.5 md:flex ">
           <img
@@ -30,15 +30,15 @@ const RecordedfileItemCard = ({
             className="h-5 w-5 md:h-[20px] md:w-[20px]"
           />
         </div>
-        <h1
-          className="text-[17px] font-light text-dark md:text-xl lg:text-2xl"
+        <p
+          className="text-[17px] text-white font-light text-dark md:text-xl lg:text-2xl"
           style={{
             lineHeight: '114.3%',
             letterSpacing: '-0.6px',
           }}
         >
           {title}
-        </h1>
+        </p>
       </div>
       <div className="flex w-fit items-center gap-x-[40px] 2xl:gap-x-[56px]">
         <h3 className="hidden text-xl font-[200] leading-[114.3%] tracking-[-0.5px] md:inline-block">

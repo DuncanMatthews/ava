@@ -4,7 +4,7 @@ import DeviceSection from '@/components/pages/home/DeviceSection';
 
 const HomePage = () => {
   return (
-    <div>
+<div className="bg-radial-gradient">
       <Header />
       <Banner />
       <DeviceSection />

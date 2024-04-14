@@ -45,9 +45,9 @@ export default function DashboardHomePage({
   return (
     <div suppressHydrationWarning={true} className="mt-5 min-h-[100vh] w-full">
       <div className=" w-full py-[23px] md:py-4 lg:py-[25px]">
-        <h1 className="text-center text-2xl font-medium text-dark md:text-4xl">
+        <h2 className="text-center text-2xl">
           Your Voice Notes
-        </h1>
+        </h2>
       </div>
       {/* search bar */}
       <div className="mx-auto mb-10 mt-4 flex h-fit w-[90%] items-center gap-[17px] rounded border border-black bg-white px-[11px] py-[10px] sm:px-[15px] md:mb-[42px] md:w-[623px] md:px-[40px] md:py-[10px]">
@@ -65,11 +65,11 @@ export default function DashboardHomePage({
             onChange={(e) => setSearchQuery(e.target.value)}
             value={searchQuery}
             className="w-full text-[16px] outline-none md:text-xl"
-          />
+          />  
         </form>
       </div>
       {/* recorded items */}
-      <div className="h-fit w-full max-w-[1360px] md:px-5 xl:mx-auto">
+      <div className="h-fit w-full bg-dark-8  max-w-[900px] md:px-5 xl:mx-auto">
         {finalNotes &&
           finalNotes.map((item, index) => (
             <RecordedfileItemCard {...item} key={index} />
@@ -86,7 +86,7 @@ export default function DashboardHomePage({
       <div className="mx-auto mt-[40px] flex h-fit w-full flex-col items-center px-5 pb-10 md:mt-[50px] lg:pb-5">
         <div className="mt-10 flex flex-col gap-6 md:flex-row">
           <Link
-            className="rounded-[7px] bg-dark px-[37px] py-[15px] text-[17px] leading-[79%] tracking-[-0.75px] text-light md:text-2xl"
+            className="rounded bg-white"
             style={{ boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
             href="/record"
           >

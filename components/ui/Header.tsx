@@ -16,7 +16,7 @@ export default async function Header() {
             alt="logo"
             className="h-10 w-10 md:h-20 md:w-20"
           />
-          <h1 className="text-xl font-medium text-[#25292F] md:text-3xl">
+          <h1 className="text-xl font-medium text-white md:text-3xl">
             AVA
           </h1>
         </Link>
@@ -26,13 +26,13 @@ export default async function Header() {
             <>
               <Link
                 href={'/dashboard'}
-                className="hidden cursor-pointer text-lg text-dark md:inline-block lg:text-xl"
+                className="hidden cursor-pointer text-white text-lg text-dark md:inline-block lg:text-xl"
               >
                 Recordings
               </Link>
               <Link
                 href={'/dashboard/action-items'}
-                className="hidden cursor-pointer text-lg text-dark md:inline-block lg:text-xl"
+                className="hidden cursor-pointer text-white text-lg text-dark md:inline-block lg:text-xl"
               >
                 Action Items
               </Link>
@@ -47,8 +47,8 @@ export default async function Header() {
               />
             </>
           ) : (
-            <Link href="/dashboard">
-              <button className="text-md primary-gradient primary-shadow rounded-lg px-5 py-1 text-center text-light md:px-10 md:py-2 md:text-xl">
+            <Link href="/sign-in">
+              <button className="text-md text-white primary-gradient primary-shadow rounded-lg px-5 py-1 text-center text-light md:px-10 md:py-2 md:text-xl">
                 Sign in
               </button>
             </Link>

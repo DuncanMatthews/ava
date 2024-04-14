@@ -31,7 +31,7 @@ export default function ActionItemsPage({
           {actionItems?.length ? actionItems?.length : 0} tasks
         </h3>
       </div>
-      <div className="mx-auto mt-[27px] w-full max-w-[900px] px-5 md:mt-[45px]">
+      <div className="mx-auto mt-[27px] w-full max-w-[800px] px-5 md:mt-[45px]">
         
         {actionItems?.map((item, idx) => (
           <div

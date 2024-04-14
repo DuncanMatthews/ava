@@ -52,7 +52,7 @@ const RecordVoicePage = () => {
           storageId,
         });
 
-        router.push(`/recording/${noteId}`);
+        router.push(`/dashboard/recording/${noteId}`);
       }
     };
     setMediaRecorder(recorder as any);

@@ -14,21 +14,21 @@ const Banner = () => {
           <span className="font-bold">V</span>irtual{' '}
           <span className="font-bold">A</span>sistant{' '}
         </a>
-        <h1 className="inline-block text-center text-4xl font-medium tracking-tighter text-dark lg:text-7xl">
+        <h1 className="inline-block text-center  from-white to-white/50  text-5xl font-bold leading-5	 tracking-wide text-dark lg:text-7xl">
           Your AI-Powered <br className="hidden lg:inline-block" />
          Virtual Assistant
         </h1>
-        <p className="mt-8 text-center text-xl font-light tracking-tight lg:text-3xl">
+        <p className="mt-8 text-center font-muted tracking-wide">
           AVA seamlessly converts your voice notes into{' '}
-          <span className="font-bold">
+          <span className="">
             organized <br className="hidden lg:inline-block" />
             summaries
           </span>{' '}
-          and <span className="font-bold">clear action items</span> using AI.
+          and <span className="">clear action items</span> using AI.
         </p>
         <Link
           href={'/dashboard'}
-          className="primary-gradient primary-shadow mx-auto mt-16 flex max-w-xl items-center justify-center gap-5 rounded-full px-4 py-2 text-center text-sm text-light md:px-12 md:py-4 md:text-2xl"
+          className=" bg-gradient-to-r from-black to-[#1b1227] text-white primary-shadow mx-auto mt-16 flex max-w-xl items-center justify-center gap-5 rounded-lg px-4 py-2 text-center text-sm text-light md:px-12 md:py-4 md:text-2xl"
         >
           Get Started
           <img
@@ -53,9 +53,9 @@ function BackgroundGradient() {
     <div
       className="h-full w-full rounded-full"
       style={{
-        opacity: '0.4',
+        opacity: '50.4',
         background:
-          'radial-gradient(54.14% 54.14% at 50% 50%, #650293 0%, rgba(103, 2, 139, 0.02) 100%)',
+          'radial-gradient(54.14% 54.14% at 50% 50%, #650293 10%, rgba(103, 2, 139, 0.02) 100%)',
         filter: 'blur(177px)',
       }}
     />
