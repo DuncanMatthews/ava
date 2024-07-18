@@ -5,11 +5,11 @@ import Footer from '@/components/ui/Footer';
 import { Toaster } from 'react-hot-toast';
 import { Analytics } from '@vercel/analytics/react';
 
-let title = 'AVA - Artficial Virtual Assistant';
-let description = 'AVA is an AI-powered virtual assistant that helps you write better notes.';
-let url = 'https://ava.io/';
-let ogimage = 'https://ava.io/ogimage.png';
-let sitename = 'ava.io';
+let title = 'MeetAVA - AI-Powered Meeting Assistant';
+let description = 'MeetAVA is an intelligent AI assistant that revolutionizes your meetings with real-time transcription, action item generation, and data-driven insights.';
+let url = 'https://meetava.io/';
+let ogimage = 'https://meetava.io/ogimage.png';
+let sitename = 'meetava.io';
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),

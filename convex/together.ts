@@ -59,6 +59,7 @@ export const chat = internalAction({
 
       console.log("Sending prompt to Gemini API"); // Debug
       const result = await model.generateContent(prompt);
+      console.log(result)
       console.log("Received response from Gemini API"); // Debug
       const response = await result.response;
       let text = response.text();

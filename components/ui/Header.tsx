@@ -5,7 +5,7 @@ import { currentUser } from '@clerk/nextjs';
 export default async function Header() {
   const user = await currentUser();
   return (
-    <div className="container relative m-0 mx-auto py-10 md:px-10">
+    <div className="container  relative m-0 mx-auto py-10 md:px-10">
       <div className="max-width flex items-center justify-between">
         {/* logo */}
         <Link className="flex w-fit items-center gap-[2px]" href="/dashboard">
@@ -26,13 +26,13 @@ export default async function Header() {
             <>
               <Link
                 href={'/dashboard'}
-                className="hidden cursor-pointer text-white text-lg text-dark md:inline-block lg:text-xl"
+                className="hidden cursor-pointer text-black text-lg text-dark md:inline-block lg:text-xl"
               >
                 Recordings
               </Link>
               <Link
                 href={'/dashboard/action-items'}
-                className="hidden cursor-pointer text-white text-lg text-dark md:inline-block lg:text-xl"
+                className="hidden cursor-pointer text-black text-lg text-dark md:inline-block lg:text-xl"
               >
                 Action Items
               </Link>

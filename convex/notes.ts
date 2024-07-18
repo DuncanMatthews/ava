@@ -9,6 +9,32 @@ export const generateUploadUrl = mutationWithUser({
   },
 });
 
+export const createNoteWithTranscript = mutationWithUser({
+  args: {
+    transcript: v.string(),
+  },
+  handler: async (ctx, { transcript }) => {
+    const userId = ctx.userId;
+
+    const noteId = await ctx.db.insert('notes', {
+      userId,
+      transcription: transcript,
+      generatingTitle: true,
+      generatingActionItems: true,
+      audioFileId: '',
+      audioFileUrl: '',
+      generatingTranscript: false
+    });
+
+    await ctx.scheduler.runAfter(0, internal.together.chat, {
+      id: noteId,
+      transcript,
+    });
+
+    return noteId;
+  },
+});
+
 export const createNote = mutationWithUser({
   args: {
     storageId: v.id('_storage'),

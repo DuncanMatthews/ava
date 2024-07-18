@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import CustomButton from '@/components/CustomButton';
 import { Redirect } from 'next';
 
 const Banner = () => {
@@ -27,7 +28,9 @@ const Banner = () => {
           </span>{' '}
           and <span className="">clear action items</span> using AI.
         </p>
-     
+        <CustomButton href="/dashboard">
+          <span>Get Started</span>
+        </CustomButton>
       </div>
       {/* background gradient */}
       <div className="absolute bottom-0 left-0 right-0 top-0 z-[-1] hidden h-full w-full grid-cols-3 md:grid">
