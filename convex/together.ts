@@ -1,4 +1,4 @@
-import OpenAI from 'openai';
+import { GoogleGenerativeAI, GenerativeModel } from "@google/generative-ai";
 import {
   internalAction,
   internalMutation,
@@ -8,21 +8,14 @@ import { v } from 'convex/values';
 import { internal } from './_generated/api';
 import { z } from 'zod';
 import { actionWithUser } from './utils';
-import Instructor from '@instructor-ai/instructor';
 
-const togetherApiKey = process.env.TOGETHER_API_KEY ?? 'undefined';
+const API_KEY = process.env.API_KEY ?? 'undefined';
 
-// Together client for LLM extraction
-const togetherai = new OpenAI({
-  apiKey: togetherApiKey,
-  baseURL: 'https://api.together.xyz/v1',
-});
+// Gemini client for LLM extraction
+const genAI = new GoogleGenerativeAI(API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
-// Instructor for returning structured JSON
-const client = Instructor({
-  client: togetherai,
-  mode: 'JSON_SCHEMA',
-});
+console.log("API Key (first 5 chars):", API_KEY.substring(0, 5)); // Debug: Log part of the API key
 
 const NoteSchema = z.object({
   title: z
@@ -48,24 +41,49 @@ export const chat = internalAction({
   },
   handler: async (ctx, args) => {
     const { transcript } = args;
+    console.log("Starting chat function with transcript length:", transcript.length); // Debug
 
     try {
-      const extract = await client.chat.completions.create({
-        messages: [
-          {
-            role: 'system',
-            content:
-              'The following is a transcript of a voice message. Extract a title, summary, and action items from it and answer in JSON in this format: {title: string, summary: string, actionItems: [string, string, ...]}',
-          },
-          { role: 'user', content: transcript },
-        ],
-        model: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
-        response_model: { schema: NoteSchema, name: 'SummarizeNotes' },
-        max_tokens: 1000,
-        temperature: 0.6,
-        max_retries: 3,
-      });
-      const { title, summary, actionItems } = extract;
+      const prompt = `
+        The following is a transcript of a voice message. Extract a title, summary, and action items from it and answer in JSON in this format: {title: string, summary: string, actionItems: [string, string, ...]}
+
+        Transcript: ${transcript}
+
+        Requirements:
+        - title: Short descriptive title of what the voice message is about
+        - summary: A short summary (max 500 characters) in the first person point of view of the person recording the voice message
+        - actionItems: A list of action items from the voice note, short and to the point. Make sure all action item lists are fully resolved if they are nested
+
+        Important: Respond with the JSON object only, without any additional text or markdown formatting.
+      `;
+
+      console.log("Sending prompt to Gemini API"); // Debug
+      const result = await model.generateContent(prompt);
+      console.log("Received response from Gemini API"); // Debug
+      const response = await result.response;
+      let text = response.text();
+      
+      console.log("Raw response:", text); // Debug: Log the raw response
+
+      // Remove any markdown code block syntax if present
+      text = text.replace(/```json\s?/, '').replace(/```\s?$/, '');
+
+      // Trim any whitespace
+      text = text.trim();
+
+      console.log("Cleaned response:", text); // Debug: Log the cleaned response
+
+      let parsedResponse;
+      try {
+        parsedResponse = JSON.parse(text);
+        console.log("Successfully parsed JSON"); // Debug
+      } catch (parseError) {
+        console.error("JSON parsing error:", parseError); // Debug
+        throw new Error("Failed to parse JSON response");
+      }
+
+      const { title, summary, actionItems } = NoteSchema.parse(parsedResponse);
+      console.log("Extracted data:", { title, summary, actionItemsCount: actionItems.length }); // Debug
 
       await ctx.runMutation(internal.together.saveSummary, {
         id: args.id,
@@ -73,14 +91,16 @@ export const chat = internalAction({
         actionItems,
         title,
       });
+      console.log("Summary saved successfully"); // Debug
     } catch (e) {
-      console.error('Error extracting from voice message', e);
+      console.error('Error in chat function:', e);
       await ctx.runMutation(internal.together.saveSummary, {
         id: args.id,
         summary: 'Summary failed to generate',
         actionItems: [],
         title: 'Title',
       });
+      console.log("Fallback summary saved"); // Debug
     }
   },
 });
@@ -141,20 +161,22 @@ export const similarNotes = actionWithUser({
     searchQuery: v.string(),
   },
   handler: async (ctx, args): Promise<SearchResult[]> => {
-    const getEmbedding = await togetherai.embeddings.create({
-      input: [args.searchQuery.replace('/n', ' ')],
-      model: 'togethercomputer/m2-bert-80M-32k-retrieval',
-    });
-    const embedding = getEmbedding.data[0].embedding;
+    console.log("Starting similarNotes function with query:", args.searchQuery); // Debug
+    const embeddingModel = genAI.getGenerativeModel({ model: "embedding-001" });
+    console.log("Generating embedding"); // Debug
+    const result = await embeddingModel.embedContent(args.searchQuery);
+    const embedding = result.embedding.values;
+    console.log("Embedding generated, length:", embedding.length); // Debug
 
     // 2. Then search for similar notes
+    console.log("Performing vector search"); // Debug
     const results = await ctx.vectorSearch('notes', 'by_embedding', {
       vector: embedding,
       limit: 16,
       filter: (q) => q.eq('userId', ctx.userId), // Only search my notes.
     });
 
-    console.log({ results });
+    console.log("Vector search results:", results.length); // Debug
 
     return results.map((r) => ({
       id: r._id,
@@ -169,16 +191,19 @@ export const embed = internalAction({
     transcript: v.string(),
   },
   handler: async (ctx, args) => {
-    const getEmbedding = await togetherai.embeddings.create({
-      input: [args.transcript.replace('/n', ' ')],
-      model: 'togethercomputer/m2-bert-80M-32k-retrieval',
-    });
-    const embedding = getEmbedding.data[0].embedding;
+    console.log("Starting embed function for note:", args.id); // Debug
+    console.log("Transcript length:", args.transcript.length); // Debug
+    const embeddingModel = genAI.getGenerativeModel({ model: "embedding-001" });
+    console.log("Generating embedding"); // Debug
+    const result = await embeddingModel.embedContent(args.transcript);
+    const embedding = result.embedding.values;
+    console.log("Embedding generated, length:", embedding.length); // Debug
 
     await ctx.runMutation(internal.together.saveEmbedding, {
       id: args.id,
       embedding,
     });
+    console.log("Embedding saved successfully"); // Debug
   },
 });
 
