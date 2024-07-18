@@ -7,7 +7,8 @@ import { Preloaded, useAction } from 'convex/react';
 import { FunctionReturnType } from 'convex/server';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { Children, useState } from 'react';
+import CustomButton from '@/components/CustomButton';
 
 export default function DashboardHomePage({
   preloadedNotes,
@@ -43,11 +44,12 @@ export default function DashboardHomePage({
   const finalNotes = relevantNotes ?? allNotes;
 
   return (
-    <div suppressHydrationWarning={true} className="mt-5 min-h-[100vh] w-full">
+    <div
+      suppressHydrationWarning={true}
+      className="mt-5 min-h-screen w-full justify-center p-4 text-center"
+    >
       <div className=" w-full py-[23px] md:py-4 lg:py-[25px]">
-        <h2 className="text-center text-2xl">
-          Your Voice Notes
-        </h2>
+        <h2 className="text-center text-black text-2xl">Your Recordings</h2>
       </div>
       {/* search bar */}
       <div className="mx-auto mb-10 mt-4 flex h-fit w-[90%] items-center gap-[17px] rounded border border-black bg-white px-[11px] py-[10px] sm:px-[15px] md:mb-[42px] md:w-[623px] md:px-[40px] md:py-[10px]">
@@ -65,41 +67,33 @@ export default function DashboardHomePage({
             onChange={(e) => setSearchQuery(e.target.value)}
             value={searchQuery}
             className="w-full text-[16px] outline-none md:text-xl"
-          />  
+          />
         </form>
       </div>
       {/* recorded items */}
-      <div className="h-fit w-full bg-dark-8  max-w-[900px] md:px-5 xl:mx-auto">
+      <div className="bg-dark-8 h-fit w-full  max-w-[900px] md:px-5 xl:mx-auto">
         {finalNotes &&
           finalNotes.map((item, index) => (
             <RecordedfileItemCard {...item} key={index} />
           ))}
         {finalNotes.length === 0 && (
           <div className="flex h-[50vh] w-full items-center justify-center">
-            <p className="text-center text-2xl text-dark">
+            <p className="text-dark text-center text-2xl">
               You currently have no <br /> recordings.
             </p>
           </div>
         )}
       </div>
       {/* actions button container */}
-      <div className="mx-auto mt-[40px] flex h-fit w-full flex-col items-center px-5 pb-10 md:mt-[50px] lg:pb-5">
-        <div className="mt-10 flex flex-col gap-6 md:flex-row">
-          <Link
-            className="rounded bg-white"
-            style={{ boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
-            href="/record"
-          >
-            Record a New Voice Note
-          </Link>
+      <div className="mx-auto mt-[40px] flex h-fit w-full items-center justify-center px-5 pb-10 md:mt-[50px] lg:pb-5">
+        <div className="flex space-x-4">
+          <CustomButton href="/record">
+            <span>Record a Voice Note</span>
+          </CustomButton>
           {allNotes && (
-            <Link
-              className="rounded-[7px] px-[37px] py-[15px] text-[17px] leading-[79%] tracking-[-0.75px] md:text-2xl"
-              style={{ boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
-              href="/dashboard/action-items"
-            >
-              View Action Items
-            </Link>
+            <CustomButton href="/dashboard/action-items">
+              <span>View Action Items</span>
+            </CustomButton>
           )}
         </div>
       </div>

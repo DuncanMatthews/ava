@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Redirect } from 'next';
 
 const Banner = () => {
   return (
@@ -14,11 +15,11 @@ const Banner = () => {
           <span className="font-bold">V</span>irtual{' '}
           <span className="font-bold">A</span>sistant{' '}
         </a>
-        <h1 className="inline-block text-center  from-white to-white/50  text-5xl font-bold leading-5	 tracking-wide text-dark lg:text-7xl">
+        <h1 className="text-dark inline-block  from-white to-white/50  text-center text-5xl font-bold	 leading-0.5 lg:leading-25 tracking-wide lg:text-7xl">
           Your AI-Powered <br className="hidden lg:inline-block" />
-         Virtual Assistant
+          Virtual Assistant
         </h1>
-        <p className="mt-8 text-center font-muted tracking-wide">
+        <p className="font-muted mt-8 text-center tracking-wide">
           AVA seamlessly converts your voice notes into{' '}
           <span className="">
             organized <br className="hidden lg:inline-block" />
@@ -26,17 +27,7 @@ const Banner = () => {
           </span>{' '}
           and <span className="">clear action items</span> using AI.
         </p>
-        <Link
-          href={'/dashboard'}
-          className=" bg-gradient-to-r from-black to-[#1b1227] text-white primary-shadow mx-auto mt-16 flex max-w-xl items-center justify-center gap-5 rounded-lg px-4 py-2 text-center text-sm text-light md:px-12 md:py-4 md:text-2xl"
-        >
-          Get Started
-          <img
-            src="/icons/get-started.svg"
-            alt="get started icon"
-            className="mt-2 h-6 w-6 md:h-9 md:w-9"
-          />
-        </Link>
+     
       </div>
       {/* background gradient */}
       <div className="absolute bottom-0 left-0 right-0 top-0 z-[-1] hidden h-full w-full grid-cols-3 md:grid">
@@ -53,7 +44,7 @@ function BackgroundGradient() {
     <div
       className="h-full w-full rounded-full"
       style={{
-        opacity: '50.4',
+        opacity: '95.4',
         background:
           'radial-gradient(54.14% 54.14% at 50% 50%, #650293 10%, rgba(103, 2, 139, 0.02) 100%)',
         filter: 'blur(177px)',

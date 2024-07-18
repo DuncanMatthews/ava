@@ -13,123 +13,105 @@ export default function RecordingMobile({
   actionItems: Doc<'actionItems'>[];
 }) {
   const { summary, transcription, title, _creationTime } = note;
-  const [transcriptOpen, setTranscriptOpen] = useState<boolean>(true);
-  const [summaryOpen, setSummaryOpen] = useState<boolean>(false);
-  const [actionItemOpen, setActionItemOpen] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<
+    'transcript' | 'summary' | 'actionItems'
+  >('transcript');
 
   const mutateActionItems = useMutation(api.notes.removeActionItem);
 
   function removeActionItem(actionId: any) {
-    // Trigger a mutation to remove the item from the list
     mutateActionItems({ id: actionId });
   }
 
   return (
-    <div className="md:hidden">
-      <div className="max-width my-5 flex items-center justify-center">
-        <h1 className="leading text-center text-xl font-medium leading-[114.3%] tracking-[-0.75px] text-dark md:text-[35px] lg:text-[43px]">
+    <div className="min-h-screen md:hidden">
+      <div className="my-6 text-center">
+        <h1 className="text-2xl font-bold text-gray-900">
           {title ?? 'Untitled Note'}
         </h1>
       </div>
-      <div className="grid w-full grid-cols-3 ">
+      <div className="flex justify-between border-b border-gray-200">
         <button
-          onClick={() => (
-            setTranscriptOpen(!transcriptOpen),
-            setActionItemOpen(false),
-            setSummaryOpen(false)
-          )}
-          className={`py-[12px] text-[17px] leading-[114.3%] tracking-[-0.425px] ${
-            transcriptOpen ? 'action-btn-active' : 'action-btn'
+          onClick={() => setActiveTab('transcript')}
+          className={`flex-1 px-4 py-3 text-sm font-medium ${
+            activeTab === 'transcript'
+              ? 'border-b-2 border-blue-500 text-blue-500'
+              : 'text-gray-500 hover:text-gray-700'
           }`}
         >
           Transcript
         </button>
         <button
-          onClick={() => (
-            setTranscriptOpen(false),
-            setActionItemOpen(false),
-            setSummaryOpen(!summaryOpen)
-          )}
-          className={`py-[12px] text-[17px] leading-[114.3%] tracking-[-0.425px] ${
-            summaryOpen ? 'action-btn-active' : 'action-btn'
+          onClick={() => setActiveTab('summary')}
+          className={`flex-1 px-4 py-3 text-sm font-medium ${
+            activeTab === 'summary'
+              ? 'border-b-2 border-blue-500 text-blue-500'
+              : 'text-gray-500 hover:text-gray-700'
           }`}
         >
           Summary
         </button>
         <button
-          onClick={() => (
-            setTranscriptOpen(false),
-            setActionItemOpen(!actionItemOpen),
-            setSummaryOpen(false)
-          )}
-          className={`py-[12px] text-[17px] leading-[114.3%] tracking-[-0.425px] ${
-            actionItemOpen ? 'action-btn-active' : 'action-btn'
+          onClick={() => setActiveTab('actionItems')}
+          className={`flex-1 px-4 py-3 text-sm font-medium ${
+            activeTab === 'actionItems'
+              ? 'border-b-2 border-blue-500 text-blue-500'
+              : 'text-gray-500 hover:text-gray-700'
           }`}
         >
           Action Items
         </button>
       </div>
-      <div className="w-full">
-        {transcriptOpen && (
-          <div className="relative mt-2 min-h-[70vh] w-full px-4 py-3 text-justify font-light">
-            <div className="">{transcription}</div>
-          </div>
+      <div className="p-4">
+        {activeTab === 'transcript' && (
+          <div className="text-gray-700">{transcription}</div>
         )}
-        {summaryOpen && (
-          <div className="relative mt-2 min-h-[70vh] w-full px-4 py-3 text-justify font-light">
-            {summary}
-          </div>
+        {activeTab === 'summary' && (
+          <div className="text-gray-700">{summary}</div>
         )}
-        {actionItemOpen && (
-          <div className="relative min-h-[70vh] w-full px-4 py-3">
-            {' '}
-            <div className="relative mx-auto mt-[27px] w-full max-w-[900px] px-5 md:mt-[45px]">
-              {actionItems?.map((item: any, idx: number) => (
+        {activeTab === 'actionItems' && (
+          <div>
+            <div className="space-y-4">
+              {actionItems?.map((item) => (
                 <div
-                  className="border-[#00000033] py-1 md:border-t-[1px] md:py-2"
-                  key={idx}
+                  key={item._id}
+                  className="rounded-lg bg-white p-4 shadow-md"
                 >
-                  <div className="flex w-full justify-center">
-                    <div className="group w-full items-center rounded py-2 text-lg font-[300] text-dark transition-colors duration-300 checked:text-gray-300 hover:bg-gray-100 md:text-2xl">
-                      <div className="flex items-center">
-                        <input
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              removeActionItem(item._id);
-                              toast.success('1 task completed.');
-                            }
-                          }}
-                          type="checkbox"
-                          checked={false}
-                          className="mr-4 h-5 w-5 cursor-pointer rounded-sm border-2 border-gray-300"
-                        />
-                        <label className="">{item?.task}</label>
-                      </div>
-                      <div className="flex justify-between md:mt-2">
-                        <p className="ml-9 text-[15px] font-[300] leading-[249%] tracking-[-0.6px] text-dark opacity-60 md:inline-block md:text-xl lg:text-xl">
-                          {new Date(Number(_creationTime)).toLocaleDateString()}
-                        </p>
-                      </div>
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-6 w-6 rounded-full border-2 border-gray-300 text-blue-600 transition duration-200 focus:ring-blue-500 focus:ring-opacity-50"
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          removeActionItem(item._id);
+                          toast.success('Task completed!');
+                        }
+                      }}
+                    />
+                    <div className="ml-4">
+                      <p className="text-base font-medium text-gray-900">
+                        {item.task}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {new Date(Number(_creationTime)).toLocaleDateString()}
+                      </p>
                     </div>
                   </div>
                 </div>
               ))}
-              <div className="mt-10 flex items-center justify-center">
-                <Link
-                  className="rounded-[7px] bg-dark px-5 py-[15px] text-[17px] leading-[79%] tracking-[-0.75px] text-light md:text-xl lg:px-[37px]"
-                  style={{
-                    boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
-                  }}
-                  href="/dashboard/action-items"
-                >
-                  View All Action Items
-                </Link>
-              </div>
-            </div>{' '}
+            </div>
+            <div className="mt-8">
+              <Link
+                href="/dashboard/action-items"
+                className="block w-full rounded-md bg-blue-600 px-4 py-3 text-center text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                View All Action Items
+              </Link>
+            </div>
           </div>
         )}
-        <Toaster position="bottom-left" reverseOrder={false} />
       </div>
+      <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
 }

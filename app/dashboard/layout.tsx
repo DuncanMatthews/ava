@@ -2,7 +2,7 @@ import Header from '@/components/ui/Header';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='bg-black '>
+    <div className=' '>
       <Header />
       {children}
     </div>

@@ -5,11 +5,8 @@ import { v } from 'convex/values';
 import Replicate from 'replicate';
 import { api, internal } from './_generated/api';
 
-const replicate = new Replicate({
-  auth: process.env.REPLICATE_API_KEY,
-});
-
 interface whisperOutput {
+  text: string;
   detected_language: string;
   segments: any;
   transcription: string;
@@ -22,26 +19,26 @@ export const chat = internalAction({
     id: v.id('notes'),
   },
   handler: async (ctx, args) => {
+    const apiKey = process.env.REPLICATE_API_KEY;
+    if (!apiKey) {
+      throw new Error("REPLICATE_API_KEY is not set in the environment variables");
+    }
+
+    const replicate = new Replicate({
+      auth: apiKey,
+    });
+
     const replicateOutput = (await replicate.run(
-      'openai/whisper:4d50797290df275329f202e48c76360b3f22b08d28c196cbc54600319435f8d2',
+      'vaibhavs10/incredibly-fast-whisper:3ab86df6c8f54c11309d4d1f930ac292bad43ace52d10c80d87eb258b3c9f79c',
       {
         input: {
           audio: args.fileUrl,
-          model: 'large-v3',
-          translate: false,
-          temperature: 0,
-          transcription: 'plain text',
-          suppress_tokens: '-1',
-          logprob_threshold: -1,
-          no_speech_threshold: 0.6,
-          condition_on_previous_text: true,
-          compression_ratio_threshold: 2.4,
-          temperature_increment_on_fallback: 0.2,
+          batch_size: 64,
         },
       },
     )) as whisperOutput;
 
-    const transcript = replicateOutput.transcription || 'error';
+    const transcript = replicateOutput.text || 'error';
 
     console.log('transcript', transcript);
 

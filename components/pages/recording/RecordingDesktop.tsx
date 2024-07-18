@@ -26,153 +26,160 @@ export default function RecordingDesktop({
   const mutateActionItems = useMutation(api.notes.removeActionItem);
 
   function removeActionItem(actionId: any) {
-    // Trigger a mutation to remove the item from the list
     mutateActionItems({ id: actionId });
   }
 
   return (
-    <div className="hidden md:block">
-      <div className="max-width mt-5 flex items-center justify-between">
-        <div />
-        <h1
-          className={`leading text-dark text-center text-xl font-medium leading-[114.3%] tracking-[-0.75px] md:text-[35px] lg:text-[43px] ${
+    <div className="mx-10 hidden min-h-screen rounded border md:block">
+      <div className="rounded-lg p-6 text-center  shadow-sm">
+        <h2
+          className={`mb-2 text-3xl font-bold text-gray-800 ${
             generatingTitle && 'animate-pulse'
           }`}
         >
           {generatingTitle ? 'Generating Title...' : title ?? 'Untitled Note'}
-        </h1>
-        <div className="flex items-center justify-center">
-          <p className="text-lg opacity-80">
-            {formatTimestamp(Number(_creationTime))}
-          </p>
-        </div>
+        </h2>
+        <p className="text-lg text-gray-500">
+          {formatTimestamp(Number(_creationTime))}
+        </p>
       </div>
-      <div className="mt-[18px] grid h-fit w-full grid-cols-2 px-[30px] py-[19px] lg:px-[45px]">
-        <div className="flex w-full items-center justify-center gap-[50px] border-r  lg:gap-[70px]">
-          <div className="flex items-center gap-4">
+
+      <div className="mt-8 grid grid-cols-2  gap-2">
+        <div className=" m-5 rounded-lg border  p-6">
+          <div className="mb-4 flex items-center justify-between">
             <button
-              className={`text-dark text-xl leading-[114.3%] tracking-[-0.6px] lg:text-2xl ${
-                originalIsOpen ? 'opacity-100' : 'opacity-40'
-              } transition-all duration-300`}
+              className={`text-xl font-semibold ${
+                originalIsOpen ? 'text-blue-600' : 'text-gray-500'
+              }`}
+              onClick={() => setOriginalIsOpen(true)}
             >
               Transcript
             </button>
             <div
+              className="relative inline-block h-6 w-12 cursor-pointer rounded-full bg-gray-300"
               onClick={() => setOriginalIsOpen(!originalIsOpen)}
-              className="bg-dark flex h-[20px] w-[36px] cursor-pointer items-center rounded-full px-[1px]"
             >
               <div
-                className={`bg-light h-4 w-4 rounded-[50%] ${
-                  originalIsOpen ? 'translate-x-1' : 'translate-x-[18px]'
-                } transition-all duration-300`}
+                className={`absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-300 ${
+                  originalIsOpen ? 'translate-x-0' : 'translate-x-6'
+                }`}
               />
             </div>
             <button
-              className={`text-dark text-xl leading-[114.3%] tracking-[0.6px] lg:text-2xl ${
-                !originalIsOpen ? 'opacity-100' : 'opacity-40'
-              } transition-all duration-300`}
+              className={`text-xl font-semibold ${
+                !originalIsOpen ? 'text-blue-600' : 'text-gray-500'
+              }`}
+              onClick={() => setOriginalIsOpen(false)}
             >
               Summary
             </button>
           </div>
+          <div className="text-lg text-gray-800">
+            {transcription ? (
+              <div>{originalIsOpen ? transcription : summary}</div>
+            ) : (
+              <div className="animate-pulse">
+                <div className="mb-2 h-4 w-3/4 rounded bg-gray-200" />
+                <div className="mb-2 h-4 w-full rounded bg-gray-200" />
+                <div className="mb-2 h-4 w-5/6 rounded bg-gray-200" />
+                <div className="h-4 w-1/2 rounded bg-gray-200" />
+              </div>
+            )}
+          </div>
         </div>
-        <div className="text-center">
-          <h1 className="text-dark text-xl leading-[114.3%] tracking-[-0.75px] lg:text-2xl xl:text-[30px]">
+
+        <div className=" m-5 rounded-lg border  p-6">
+          <h3 className="mb-4 text-2xl font-bold text-gray-800">
             Action Items
-          </h1>
-        </div>
-      </div>
-
-      <div className="grid h-full w-full grid-cols-2 px-[30px] lg:px-[45px]">
-        <div className="relative min-h-[70vh] w-full border-r px-5 py-3 text-justify text-xl font-[300] leading-[114.3%] tracking-[-0.6px] lg:text-2xl">
-          {transcription ? (
-            <div className="">{originalIsOpen ? transcription : summary}</div>
-          ) : (
-            // Loading state for transcript
-            <ul className="animate-pulse space-y-3">
-              <li className="h-6 w-full rounded-full bg-gray-200 dark:bg-gray-700"></li>
-              <li className="h-6 w-full rounded-full bg-gray-200 dark:bg-gray-700"></li>
-              <li className="h-6 w-full rounded-full bg-gray-200 dark:bg-gray-700"></li>
-              <li className="h-6 w-full rounded-full bg-gray-200 dark:bg-gray-700"></li>
-              <li className="h-6 w-full rounded-full bg-gray-200 dark:bg-gray-700"></li>
-            </ul>
-          )}
-        </div>
-
-        {/* start action items div */}
-        <div className="relative mx-auto mt-[10px] w-full max-w-[900px] px-5 md:mt-[45px]">
-          {generatingActionItems
-            ? [0, 1, 3].map((item: any, idx: number) => (
-                <div
-                  className="animate-pulse border-[#00000033] py-1 md:border-t-[1px] md:py-2"
-                  key={idx}
-                >
-                  <div className="flex w-full justify-center">
-                    <div className="text-white group w-full items-center rounded p-2 text-lg font-[300] transition-colors duration-300 checked:text-gray-300  md:text-2xl">
-                      <div className="flex items-center">
-                        <input
-                          disabled
-                          type="checkbox"
-                          checked={false}
-                          className="mr-4 h-5 w-5 cursor-pointer rounded-sm border-2 border-gray-300"
-                        />
-                        <label className="h-5 w-full rounded-full text-white bg-gray-200" />
-                      </div>
-                      <div className="flex justify-between md:mt-2">
-                        <p className="text-white ml-9 text-[15px] font-[300] leading-[249%] tracking-[-0.6px] opacity-60 md:inline-block md:text-xl lg:text-xl">
-                          {new Date(Number(_creationTime)).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+          </h3>
+          {generatingActionItems ? (
+            <div className="space-y-4">
+              {[0, 1, 2].map((item) => (
+                <div key={item} className="flex items-center">
+                  <div className="mr-4 h-4 w-4  rounded-full bg-gray-200" />
+                  <div className="h-4 w-full rounded bg-gray-200" />
                 </div>
-              ))
-            : actionItems?.map((item: any, idx: number) => (
-                <div className="" key={idx}>
-                  <div className="mx-2 space-x-4 flex items-center rounded-lg mb-5 justify-between pl-3 backdrop-blur-sm bg-purple-200/30 border-4 border-purple-200/20 backdrop-filter">
-                    <div className=" group w-full items-center rounded p-2 text-lg font-[300] transition-colors duration-300 checked:text-gray-300 text-white md:text-2xl">
-                      <div className="flex text-white items-center">
+              ))}
+            </div>
+          ) : (
+            <>
+              <div className="space-y-6">
+                {actionItems?.map((item) => (
+                  <div
+                    key={item._id}
+                    className="hover:scale-10 rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-transform duration-300"
+                  >
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0">
                         <input
+                          type="checkbox"
+                          className="form-checkbox h-6 w-6 rounded-full border-2 border-gray-300 text-blue-600 transition duration-200 focus:ring-blue-500 focus:ring-opacity-50"
                           onChange={(e) => {
                             if (e.target.checked) {
                               removeActionItem(item._id);
-                              toast.success('1 task completed.');
+                              toast.success('Task completed!');
                             }
                           }}
-                          type="checkbox"
-                          checked={false}
-                          className="mr-4 h-5 w-5 cursor-pointer rounded-sm border-2 border-gray-300"
                         />
-                        {/* Action Item Title Start */}
-                        <label className="text-white"><p>{item?.task}</p></label>
-                          {/* Action Item Title Finish */}
                       </div>
-
-                      {/* Action Item Date Start */}
-                      <div className="flex justify-between md:mt-2">
-                        <p className="text-white ml-9  tracking-[-0.6px] opacity-60 md:inline-block md:text-xl lg:text-xl">
-                          {new Date(Number(_creationTime)).toLocaleDateString()}
+                      <div className="ml-4">
+                        <p className="text-lg font-medium text-gray-900">
+                          {item.task}
                         </p>
+                        <div className="mt-2 flex items-center space-x-4">
+                          <div className="flex items-center">
+                            <svg
+                              className="h-5 w-5 text-gray-400"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            <span className="ml-1 text-sm text-gray-500">
+                              {new Date(
+                                item._creationTime,
+                              ).toLocaleDateString()}
+                            </span>
+                          </div>
+                          <div className="flex items-center">
+                            <svg
+                              className="h-5 w-5 text-gray-400"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            <span className="ml-1 text-sm text-gray-500">
+                             
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                      {/* Action Item Date Start */}
                     </div>
                   </div>
-                </div>
-              ))}
-
-          {/* Start view all action items button */}
-          <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center justify-center">
-            <Link
-              className="bg-dark text-light rounded-[7px] px-5 py-[15px] text-[17px] leading-[79%] tracking-[-0.75px] md:text-xl lg:px-[37px]"
-              style={{ boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
-              href="/dashboard/action-items"
-            >
-              View All Action Items
-            </Link>
-          </div>
-          {/* End view all action items button */}
+                ))}
+              </div>
+              <div className="mt-8 text-center">
+                <Link
+                  href="/dashboard/action-items"
+                  className="rounded-md bg-blue-600 px-6 py-3 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                  View All Action Items
+                </Link>
+              </div>
+            </>
+          )}
         </div>
-        {/* end action items div */}
       </div>
     </div>
   );
